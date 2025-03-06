@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos - Restaurante</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffebcd;
+            color: #333;
+            text-align: center;
+            margin: 
+            padding: 20px;
+        }
+        .menu {
+            background: #ff5722;
+            padding: 15px;
+            color: white;
+            font-size: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #e68900;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .pedido-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fdd835;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .pedido-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .pedido-texto {
+            flex-grow: 1;
+            text-align: left;
+        }
+        .btn-editar, .btn-eliminar {
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-editar {
+            background-color: #2196f3;
+            color: white;
+        }
+        .btn-editar:hover {
+            background-color: #1976d2;
+        }
+        .btn-eliminar {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn-eliminar:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">🍽️ Menú de Restaurante</div>
+    <div class="container">
+        <h1>Gestión de Pedidos</h1>
+        <input type="text" id="pedido" placeholder="Ingrese pedido">
+        <input type="text" id="imagenURL" placeholder="URL de la imagen">
+        <button onclick="agregarPedido()">Agregar Pedido</button>
+        <ul id="listaPedidos"></ul>
+    </div>
+    <script>
+        function agregarPedido() {
+            let pedido = document.getElementById("pedido").value;
+            let imagenURL = document.getElementById("imagenURL").value;
+            if (pedido) {
+                let lista = document.getElementById("listaPedidos");
+                let item = document.createElement("li");
+                item.className = "pedido-item";
+                
+                let img = document.createElement("img");
+                img.src = imagenURL || "https://via.placeholder.com/50";
+                
+                let texto = document.createElement("input");
+                texto.className = "pedido-texto";
+                texto.type = "text";
+                texto.value = pedido;
+                texto.disabled = true;
+                
+                let btnEditar = document.createElement("button");
+                btnEditar.className = "btn-editar";
+                btnEditar.textContent = "Editar";
+                btnEditar.onclick = function () {
+                    if (texto.disabled) {
+                        texto.disabled = false;
+                        texto.focus();
+                        btnEditar.textContent = "Guardar";
+                    } else {
+                        texto.disabled = true;
+                        btnEditar.textContent = "Editar";
+                    }
+                };
+                
+                let btnEliminar = document.createElement("button");
+                btnEliminar.className = "btn-eliminar";
+                btnEliminar.textContent = "Eliminar";
+                btnEliminar.onclick = function () {
+                    lista.removeChild(item);
+                };
+                
+                item.appendChild(img);
+                item.appendChild(texto);
+                item.appendChild(btnEditar);
+                item.appendChild(btnEliminar);
+                lista.appendChild(item);
+                
+                document.getElementById("pedido").value = "";
+                document.getElementById("imagenURL").value = "";
+            }
+        }
+    </script>
+</body>
+</html>
